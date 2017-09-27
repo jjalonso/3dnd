@@ -1,4 +1,4 @@
-
+import TWEEN from '@tweenjs/tween.js';
 
 class Engine {
 
@@ -17,6 +17,7 @@ class Engine {
 
     _update() {
         // console.log('Engine::update');
+        TWEEN.update();
         this._scene.update();
     }
 

@@ -3,10 +3,12 @@ class Scene {
 
     constructor() {
         this._scene = new THREE.Scene();
-        this._camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);        
+        this._camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);        
     }
 
-    update() { }
+    update() { 
+
+    }
 
     get renderingData() {
         return [this._scene, this._camera];

@@ -5,6 +5,10 @@ class Renderable {
         this._mesh = undefined;
     }
 
+    update() {
+
+    }
+
     get mesh() {
         return this._mesh;
     }
