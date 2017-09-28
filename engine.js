@@ -6,19 +6,37 @@ class Engine {
         this._renderer = new THREE.WebGLRenderer();
         this._requestAnimId = false;  
         this._scene = undefined;
-
+        this._clock = new THREE.Clock();
+        
         this._initialiseRenderer();
+        this._initialiseEvents();
     }
 
+
+    //
+    // PRIVATE
+    //
+    
     _initialiseRenderer() {
         this._renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(this._renderer.domElement);
     }
 
+    _initialiseEvents() {
+        window.addEventListener('resize', () => this._onWindowResize(), false);        
+    }
+
+    _onWindowResize () {
+        let camera = this._scene.camera;
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        this._renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
     _update() {
-        // console.log('Engine::update');
+        let delta = this._clock.getDelta();
         TWEEN.update();
-        this._scene.update();
+        this._scene.update(delta);
     }
 
     _loop() {
@@ -28,10 +46,13 @@ class Engine {
     }
 
     _render() {
-        // console.log('Engine::render');
-        let renderingData = this._scene.renderingData;
-        this._renderer.render(...renderingData);
+        this._renderer.render(this._scene, this._scene.camera);
     }
+
+
+    //
+    // PUBLIC
+    //
 
     setScene(scene) {
         this._scene = scene;

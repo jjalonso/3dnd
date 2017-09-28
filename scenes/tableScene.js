@@ -1,14 +1,14 @@
 import Scene from '../scene.js';
 import Character from '../character.js';
-import Grid from '../grid.js';
 
-// import 'three-orbit-controls';
+import loader from '../loader.js';
+
 
 class TableScene extends Scene {
 
     constructor() {
         super();
-        this._goblinCharacter = undefined;
+        this._demoCharacter = undefined;
         
         this._initialiseCamera();        
         this._initialiseEntities();
@@ -22,21 +22,23 @@ class TableScene extends Scene {
     }
 
     _initialiseEntities() {
-        let directionalLight = new THREE.DirectionalLight(0xffffff, 5);
-        directionalLight.position.set(0, 10, 5);
-        this._scene.add(directionalLight);
+        let directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(0, 5, 0);
+        this.add(directionalLight);
     
         // var directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight, 10 );
-        // this._scene.add(directionalLightHelper);
+        // this.add(directionalLightHelper);
         
-        var grid = new Grid(7);
-        this._scene.add(grid.mesh);
-        
-        // HACK USING THEN UNTIL AWAIT IS IMPLEMENTED, IT SHOULD WAIT UNTIL PROMISE RESOLVED
-        this._goblinCharacter = new Character();
-        this._goblinCharacter.loadAsset('goblin').then(mesh => {
-            this._scene.add(mesh)        
+        let gridSize = 7;
+        let grid = new THREE.GridHelper(3 * gridSize, gridSize);
+        this.add(grid);
+
+        loader.loadAnimatedMesh('assets/characters/eva/eva-animated.json').then(mesh => {
+            mesh.scale.set(3,3,3)            
+            this.add(mesh);
+            this._demoCharacter = new Character(mesh);
         });
+        
     } 
 
     _initialiseControls() {
@@ -47,15 +49,15 @@ class TableScene extends Scene {
         // Movement prototype
         var keyCode = event.which;        
         if (keyCode == 13) {
-            // Enter
-            this._goblinCharacter.walkTo(6, 6);
+            // Enter key
+            this._demoCharacter.walkTo(6, 6);
         }
     }
 
-    update() {
-        // TODO: It should really update only a renderable store.
-        this._goblinCharacter.update();
+    update(delta) {
+        super.update(delta);
     }
+
 
 }
 

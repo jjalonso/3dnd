@@ -1,29 +1,21 @@
 import TWEEN from '@tweenjs/tween.js';
 
-import Renderable from './renderable.js';
-import MeshLoader from './meshLoader.js';
+class Character  {
 
-class Character extends Renderable {
-
-    constructor() {
-        super();
+    constructor(animatedMesh) {
+        this._mesh = animatedMesh;
         this._speed = 15;
+
+        this._initialiseMesh()
     }
 
-
+    
     //
     // PRIVATE
     //
 
-    _startSwayTween() {
-        // Example of property animation 
-        this._mesh.rotation.z = -0.015;
-        var tween = new TWEEN.Tween(this._mesh.rotation)
-            .easing(TWEEN.Easing.Sinusoidal.InOut)
-            .to({ z: 0.015 }, 1200)
-            .repeat(Infinity)
-            .yoyo(true)
-            .start();
+    _initialiseMesh() {
+        this._mesh.animActions.idle.play();
     }
 
     _getFaceToTween(x, z) {
@@ -38,7 +30,7 @@ class Character extends Renderable {
         return tween;
     }
 
-    _getWalkToTween(x, z) {
+    _getWalkToTween(x, z) {        
         // This should be one action that change to WalkingState and this code be in the walking state.
         let from = this._mesh.position;
         let to = new THREE.Vector3(x, 0, z);
@@ -46,7 +38,7 @@ class Character extends Renderable {
         let duration = this._speed * distance;
         let tween = new TWEEN.Tween(this._mesh.position)
         .easing(TWEEN.Easing.Sinusoidal.InOut)
-        .to(to, duration);
+        .to(to, duration)        
 
         return tween;
     }
@@ -56,29 +48,22 @@ class Character extends Renderable {
     // PUBLIC 
     //
 
-    loadAsset(assetName) {
-        let assetPath = 'assets/characters/' + assetName + '/';
-        return MeshLoader.load(assetPath).then(mesh => {
-            this._mesh = mesh;
-            this._startSwayTween();   
-            return mesh;
-        })
-    }
-
-    update() {
-        // TODO: Implement a machine state
-        // And from here we should be changing the state
-    }
-
     walkTo(x, z) {
         this._getFaceToTween(x, z)
-        .chain(this._getWalkToTween(x, z))
+        .onComplete(() => {
+            this._mesh.fadeToAnim(this._mesh.animActions.run)
+            this._getWalkToTween(x, z)
+            .onComplete(() => {
+                this._mesh.fadeToAnim(this._mesh.animActions.idle)
+            })
+            .start();
+        })
         .start();
     }
 
 
     //
-    // ACCESSORS
+    // ACCESSOR
     //
 
     get speed() {

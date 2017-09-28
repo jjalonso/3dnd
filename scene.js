@@ -1,17 +1,36 @@
+import AnimatedMesh from './animatedMesh.js';
+// import RenderableLoader from './renderableLoader';
 
-class Scene {
+class Scene extends THREE.Scene {
 
     constructor() {
-        this._scene = new THREE.Scene();
-        this._camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);        
+        super();
+        this._camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
+    }
+    
+    //
+    // PRIVATE
+    //
+
+
+    //
+    // PUBLIC
+    //
+    
+    update(delta) {
+        this.children.forEach(child => {
+            if (child instanceof AnimatedMesh) {
+                child.mixer.update(delta);
+            }
+        });
     }
 
-    update() { 
+    //
+    // ACCESSOR
+    //
 
-    }
-
-    get renderingData() {
-        return [this._scene, this._camera];
+    get camera() {
+        return this._camera;
     }
 
 }
