@@ -9,7 +9,7 @@ class Character  {
         this._initialiseMesh()
     }
 
-    
+
     //
     // PRIVATE
     //
@@ -19,7 +19,7 @@ class Character  {
     }
 
     _getFaceToTween(x, z) {
-        let from = new THREE.Vector3(1, 1, 1);//this._mesh.position;
+        let from = new THREE.Vector3(1, 1, 1);
         let to = new THREE.Vector3(2, 2, 3);
         let sub = to.sub(from);
         let angle = Math.atan2(sub.x, sub.z);

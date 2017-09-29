@@ -1,14 +1,15 @@
 import TWEEN from '@tweenjs/tween.js';
+import './node_modules/three/examples/js/effects/StereoEffect.js';
+
 
 class Engine {
 
-    constructor() {
-        this._renderer = new THREE.WebGLRenderer();
-        this._requestAnimId = false;  
-        this._scene = undefined;
+    constructor(config) {
+        this._renderer = this._buildRenderer(config.stereo);
         this._clock = new THREE.Clock();
+        this._requestAnimId = false;          
+        this._scene;        
         
-        this._initialiseRenderer();
         this._initialiseEvents();
     }
 
@@ -17,20 +18,28 @@ class Engine {
     // PRIVATE
     //
     
-    _initialiseRenderer() {
-        this._renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(this._renderer.domElement);
-    }
-
     _initialiseEvents() {
-        window.addEventListener('resize', () => this._onWindowResize(), false);        
+        window.addEventListener('resize', () => this._onWindowResize(), false);         
     }
 
-    _onWindowResize () {
+    _buildRenderer(isStereo) {
+        let renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio(window.devicePixelRatio);        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);        
+        
+        if (isStereo) {
+            renderer = new THREE.StereoEffect(renderer);
+        }
+        
+        return renderer;
+    }
+
+    _onWindowResize() {
         let camera = this._scene.camera;
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        this._renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(window.innerWidth, window.innerHeight);        
       }
 
     _update() {
@@ -40,8 +49,8 @@ class Engine {
     }
 
     _loop() {
-        this._update();
         this._render();
+        this._update();
         this._requestAnimId = requestAnimationFrame(() => this._loop());
     }
 

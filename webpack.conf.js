@@ -33,9 +33,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      // 'three-orbit-controls': './node_modules/three/examples/js/controls/OrbitControls.js',  // Failing when importing it from specific files
-      'three-mtl-loader': './node_modules/three/examples/js/loaders/MTLLoader.js',
-      'three-obj-loader': './node_modules/three/examples/js/loaders/OBJLoader.js'
+      'three-stereo-effect': './node_modules/three/examples/js/effects/StereoEffect.js'
     }
   }
 

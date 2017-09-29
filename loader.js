@@ -1,5 +1,4 @@
 import AnimatedMesh from './animatedMesh.js';
-// import 'three-obj-loader';
 // import 'three-mtl-loader';
 
 class Loader {
