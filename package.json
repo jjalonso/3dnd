@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "dist": "webpack --config webpack.conf.js",
-    "dev": "webpack-dev-server --content-base dist/ --config webpack.conf.js"
+    "dev": "webpack-dev-server --content-base dist/ --config webpack.conf.js",
+    "tunnel": "ngrok http --host-header=rewrite 8080"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +19,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "html-webpack-plugin": "^2.30.1",
     "js-uuid": "0.0.6",
+    "ngrok": "^2.2.22",
     "three": "^0.87.1",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.8.2"

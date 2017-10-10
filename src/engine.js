@@ -1,5 +1,6 @@
 import TWEEN from '@tweenjs/tween.js';
-import './node_modules/three/examples/js/effects/StereoEffect.js';
+// import 'three-stereo-effect';
+import "../node_modules/three/examples/js/effects/StereoEffect.js";
 
 
 class Engine {
@@ -39,7 +40,7 @@ class Engine {
         let camera = this._scene.camera;
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);        
+        this._renderer.setSize(window.innerWidth, window.innerHeight);        
       }
 
     _update() {

@@ -39,5 +39,4 @@ class Loader {
 }
 
 // No-safe singleton
-const instance = new Loader();
-export default instance;
+export default Loader;

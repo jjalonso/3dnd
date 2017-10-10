@@ -27,19 +27,35 @@ class AnimatedMesh extends THREE.SkinnedMesh {
     //
 
     fadeToAnim(animAction) {
-        if ( this._currentAnimAction) {
-            let from = this._currentAnimAction.play();
+        if (this._currentAnimAction) {
+            this._currentAnimAction.fadeOut();
+            // this._currentAnimAction.play();
             let to = animAction.play();
-            from.crossFadeTo(to, 0.2, true);
-            
+            to.fadeIn();
+            // this._currentAnimAction.crossFadeTo(to, 0.2);   
         } else {
             animAction.play();
         }
 
         this._currentAnimAction = animAction;
     }
+        
+	// play(animName, weight) {
+    //     //console.log("play('%s', %f)", animName, weight);		
+    //     return this.mixer.clipAction(animName).		
+    //             setEffectiveWeight(weight).play();	
+    // };
 
+    // crossfade(fromAnimName, toAnimName) {
+	// 	this.mixer.stopAllAction();		
+		
+	// 	var fromAction = this.play(fromAnimName, 1);		
+	// 	var toAction = this.play(toAnimName, 1);		
+		
+	// 	fromAction.crossFadeTo(toAction, 0.2, false);
+	// };
     
+
     //
     // ACCESSOR
     //

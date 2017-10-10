@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
 
-  entry: './app.js',
+  entry: './game/app.js',
   output: {
     path: __dirname + '/dist',
     filename: 'bundle.js'
@@ -28,12 +28,13 @@ module.exports = {
       title: '3D Augmented Reality for Dungeons & Dragons',
 
     }),
-    new CopyWebpackPlugin([{ from: 'assets/**/*' }]),
-    new webpack.ProvidePlugin({THREE: 'three'})
+    new CopyWebpackPlugin([{ from: 'game/assets/**/*', to: 'assets', flatten: true }]),
+    new webpack.ProvidePlugin({ THREE: 'three' })
   ],
   resolve: {
     alias: {
-      'three-stereo-effect': './node_modules/three/examples/js/effects/StereoEffect.js'
+      'three-orbit-control': './node_modules/three/examples/js/controls/OrbitControls.js',      
+      // 'three-stereo-effect': './node_modules/three/examples/js/effects/StereoEffect.js',
     }
   }
 
