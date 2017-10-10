@@ -15,7 +15,7 @@ ThreeJS for 3D rendering of a grid with this features:
 * ~~Animation for walking~~ Done
 * ~~Animation for attack~~ Done
 * Animation for spell casting. (Blocked, Art missing)
-* ~~Limit movement only througt cells~~ Done
+* ~~Limit movement only througt cells~~ Done (Testing pending)
 * Limit movement range by character speed (In progress)
 
 Tomorrow, Augmented Reality
